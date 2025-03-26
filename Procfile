@@ -1,1 +1,1 @@
-web: gunicorn codestar.wsgi
+web: gunicorn munch_project.wsgi
