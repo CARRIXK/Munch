@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{% block title %}Munch{% endblock %}</title>
+    
+    {% load static %}
+    <!-- Common CSS -->
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    
+    <!-- Additional CSS specific to each page -->
+    {% block styles %}{% endblock %}
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <div class="logo">
+                <a href="{% url 'index' %}">
+                    <img src="{% static 'images/munch-logo.png' %}" alt="Munch Logo">
+                </a>
+            </div>
+            
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="{% url 'index' %}">Home</a></li>
+                    <li><a href="{% url 'menu' %}">Menu</a></li>
+                    <li><a href="{% url 'about' %}">About</a></li>
+                    <li><a href="{% url 'contact' %}">Contact</a></li>
+                </ul>
+            </nav>
+
+            <div class="user-actions">
+                <a href="{% url 'login' %}" class="btn-login">Login</a>
+                <a href="{% url 'register' %}" class="btn-register">Register</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="site-content">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Munch</h3>
+                    <p>Delicious food, delivered fast.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="{% url 'menu' %}">Menu</a></li>
+                        <li><a href="{% url 'about' %}">About Us</a></li>
+                        <li><a href="{% url 'contact' %}">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Connect</h3>
+                    <div class="social-links">
+                        <a href="#" class="social-link">Facebook</a>
+                        <a href="#" class="social-link">Instagram</a>
+                        <a href="#" class="social-link">Twitter</a>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; {% now "Y" %} Munch. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Common JavaScript -->
+    <script src="{% static 'js/base.js' %}"></script>
+    
+    <!-- Additional JavaScript specific to each page -->
+    {% block scripts %}{% endblock %}
+</body>
+</html>
