@@ -1,1 +1,1 @@
-web: gunicorn munch.wsgi
+web: gunicorn munch_project.wsgi
