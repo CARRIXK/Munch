@@ -11,7 +11,7 @@
 <div class="login-container">
     <div class="login-box">
         <h1>Login to Munch</h1>
-        <form id="login-form" method="post">
+        <form id="login-form" method="post" action="{% url 'login' %}">
             {% csrf_token %}
             <div class="form-group">
                 <label for="username">Username</label>
@@ -21,10 +21,18 @@
                 <label for="password">Password</label>
                 <input type="password" id="password" name="password" required>
             </div>
+            <div class="form-group">
+                <a href="{% url 'password_reset' %}" class="forgot-password">Forgot Password?</a>
+            </div>
             <div class="form-actions">
                 <button type="submit" class="btn-login">Login</button>
             </div>
-            <div id="error-message" class="error-message"></div>
+            <div id="error-message" class="error-message">
+                {% if form.errors %}
+                    Username or password is incorrect.
+                {% endif %}
+                {{ error_message }}
+            </div>
         </form>
         <div class="register-link">
             Don't have an account? <a href="{% url 'register' %}">Register</a>
