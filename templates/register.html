@@ -11,7 +11,8 @@
 <div class="login-container">
     <div class="login-box">
         <h1>Create an Account</h1>
-        <form id="register-form" method="post">
+        <!-- Note: This is a fallback page for direct URL access or browsers without JavaScript -->
+        <form id="standalone-register-form" method="post" action="{% url 'register' %}">
             {% csrf_token %}
             <div class="form-group">
                 <label for="username">Username</label>
@@ -24,6 +25,7 @@
             <div class="form-group">
                 <label for="password">Password</label>
                 <input type="password" id="password" name="password" required>
+                <small class="password-hint">Password must be at least 8 characters long</small>
             </div>
             <div class="form-group">
                 <label for="confirm_password">Confirm Password</label>
@@ -32,7 +34,16 @@
             <div class="form-actions">
                 <button type="submit" class="btn-login">Register</button>
             </div>
-            <div id="error-message" class="error-message"></div>
+            <div id="error-message" class="error-message">
+                {% if form.errors %}
+                    {% for field, errors in form.errors.items %}
+                        {% for error in errors %}
+                            {{ error }}
+                        {% endfor %}
+                    {% endfor %}
+                {% endif %}
+                {{ error_message }}
+            </div>
         </form>
         <div class="register-link">
             Already have an account? <a href="{% url 'login' %}">Login</a>
@@ -42,5 +53,14 @@
 {% endblock %}
 
 {% block scripts %}
-<script src="{% static 'js/register_page_js.js' %}"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const registerForm = document.getElementById('standalone-register-form');
+    if (registerForm) {
+        registerForm.addEventListener('submit', function(e) {
+            // Allow normal form submission for this standalone page
+        });
+    }
+});
+</script>
 {% endblock %}

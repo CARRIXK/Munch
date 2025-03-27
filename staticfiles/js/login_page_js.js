@@ -15,35 +15,33 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
             
-            // Here you would typically send the data to your server
-            // using fetch API or similar, but for now we'll just simulate a submission
+            // Get CSRF token
+            const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
             
-            // Example fetch request (uncomment and modify when backend is ready)
-            /*
-            fetch('/api/login', {
+            // Instead of using fetch, let's submit the form normally
+            // which is more reliable for Django's authentication views
+            this.submit();
+            
+            /* Commenting out fetch approach which might be causing issues
+            fetch(loginForm.action || window.location.href, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'X-CSRFToken': csrfToken
                 },
-                body: JSON.stringify({ username, password }),
+                body: new URLSearchParams({
+                    'username': username,
+                    'password': password,
+                    'csrfmiddlewaretoken': csrfToken
+                })
             })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    window.location.href = '/dashboard';
-                } else {
-                    errorMessage.textContent = data.message || 'Login failed';
-                }
+            .then(response => {
+                // ...existing code...
             })
             .catch(error => {
-                errorMessage.textContent = 'An error occurred during login';
-                console.error(error);
+                // ...existing code...
             });
             */
-            
-            // For demonstration purposes only
-            console.log('Login form submitted:', { username, password });
-            loginForm.reset();
         });
     }
 });

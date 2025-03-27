@@ -36,37 +36,50 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
             
-            // Here you would typically send the data to your server
-            // using fetch API or similar, but for now we'll just simulate a submission
+            // Get CSRF token
+            const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
             
-            // Example fetch request (uncomment and modify when backend is ready)
-            /*
-            fetch('/api/register', {
+            // Send registration request to server
+            fetch(registerForm.action || window.location.href, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'X-CSRFToken': csrfToken
                 },
-                body: JSON.stringify({ username, email, password }),
+                body: new URLSearchParams({
+                    'username': username,
+                    'email': email,
+                    'password': password,
+                    'confirm_password': confirmPassword,
+                    'csrfmiddlewaretoken': csrfToken
+                })
             })
-            .then(response => response.json())
+            .then(response => {
+                if (response.redirected) {
+                    window.location.href = response.url;
+                    return;
+                }
+                return response.text();
+            })
             .then(data => {
-                if (data.success) {
-                    window.location.href = '/login?registered=true';
+                if (!data) return; // If redirected, data will be undefined
+                
+                // Check if the response contains an error message
+                if (data.includes('error-message')) {
+                    // Extract error message or use a default
+                    const parser = new DOMParser();
+                    const htmlDoc = parser.parseFromString(data, 'text/html');
+                    const serverErrorMsg = htmlDoc.getElementById('error-message');
+                    errorMessage.textContent = serverErrorMsg?.textContent || 'Registration failed. Please try again.';
                 } else {
-                    errorMessage.textContent = data.message || 'Registration failed';
+                    // If we got HTML back but no redirect, refresh the page
+                    window.location.reload();
                 }
             })
             .catch(error => {
                 errorMessage.textContent = 'An error occurred during registration';
                 console.error(error);
             });
-            */
-            
-            // For demonstration purposes only
-            console.log('Registration form submitted:', { username, email, password });
-            // Uncomment below line to submit the form for real
-            // this.submit();
         });
     }
 });

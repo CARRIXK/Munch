@@ -33,7 +33,7 @@ def login(request):
         else:
             messages.error(request, 'Invalid username or password')
     
-    return render(request, 'login_page.html')
+    return render(request, 'login.html')
 
 def register(request):
     """View function for the register page."""
