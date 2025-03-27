@@ -11,7 +11,8 @@
 <div class="login-container">
     <div class="login-box">
         <h1>Create an Account</h1>
-        <form id="register-form" method="post" action="{% url 'register' %}">
+        <!-- Note: This is a fallback page for direct URL access or browsers without JavaScript -->
+        <form id="standalone-register-form" method="post" action="{% url 'register' %}">
             {% csrf_token %}
             <div class="form-group">
                 <label for="username">Username</label>
@@ -52,5 +53,14 @@
 {% endblock %}
 
 {% block scripts %}
-<script src="{% static 'js/register_page_js.js' %}"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const registerForm = document.getElementById('standalone-register-form');
+    if (registerForm) {
+        registerForm.addEventListener('submit', function(e) {
+            // Allow normal form submission for this standalone page
+        });
+    }
+});
+</script>
 {% endblock %}

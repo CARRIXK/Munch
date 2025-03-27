@@ -11,8 +11,7 @@
 <div class="login-container">
     <div class="login-box">
         <h1>Login to Munch</h1>
-        <!-- Note: This is a fallback page for direct URL access or browsers without JavaScript -->
-        <form id="standalone-login-form" method="post" action="{% url 'login' %}">
+        <form id="login-form" method="post" action="{% url 'login' %}">
             {% csrf_token %}
             <div class="form-group">
                 <label for="username">Username</label>
@@ -22,9 +21,6 @@
                 <label for="password">Password</label>
                 <input type="password" id="password" name="password" required>
             </div>
-            
-            <input type="hidden" name="next" value="{{ next|default:'/' }}">
-            
             <div class="form-group">
                 <a href="{% url 'password_reset' %}" class="forgot-password">Forgot Password?</a>
             </div>
@@ -34,10 +30,6 @@
             <div id="error-message" class="error-message">
                 {% if form.errors %}
                     Username or password is incorrect.
-                {% elif form.non_field_errors %}
-                    {% for error in form.non_field_errors %}
-                        {{ error }}
-                    {% endfor %}
                 {% endif %}
                 {{ error_message }}
             </div>
@@ -50,14 +42,5 @@
 {% endblock %}
 
 {% block scripts %}
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const loginForm = document.getElementById('standalone-login-form');
-    if (loginForm) {
-        loginForm.addEventListener('submit', function(e) {
-            // Allow normal form submission for this standalone page
-        });
-    }
-});
-</script>
+<script src="{% static 'js/login_page_js.js' %}"></script>
 {% endblock %}

@@ -18,7 +18,11 @@ document.addEventListener('DOMContentLoaded', function() {
             // Get CSRF token
             const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
             
-            // Send login request to server
+            // Instead of using fetch, let's submit the form normally
+            // which is more reliable for Django's authentication views
+            this.submit();
+            
+            /* Commenting out fetch approach which might be causing issues
             fetch(loginForm.action || window.location.href, {
                 method: 'POST',
                 headers: {
@@ -32,28 +36,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 })
             })
             .then(response => {
-                if (response.redirected) {
-                    window.location.href = response.url;
-                    return;
-                }
-                return response.text();
-            })
-            .then(data => {
-                if (!data) return; // If redirected, data will be undefined
-                
-                // Check if the response contains an error message
-                if (data.includes('error-message')) {
-                    errorMessage.textContent = 'Invalid username or password';
-                } else {
-                    // If we got HTML back but no redirect, refresh the page
-                    // This is a fallback and should typically not happen
-                    window.location.reload();
-                }
+                // ...existing code...
             })
             .catch(error => {
-                errorMessage.textContent = 'An error occurred during login';
-                console.error(error);
+                // ...existing code...
             });
+            */
         });
     }
 });

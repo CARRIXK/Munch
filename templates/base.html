@@ -9,6 +9,7 @@
     {% load static %}
     <!-- Common CSS -->
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/login_page_style.css' %}">
     
     <!-- Additional CSS specific to each page -->
     {% block styles %}{% endblock %}
@@ -32,8 +33,14 @@
             </nav>
 
             <div class="user-actions">
-                <a href="{% url 'login' %}" class="btn-login">Login</a>
-                <a href="{% url 'register' %}" class="btn-register">Register</a>
+                {% if user.is_authenticated %}
+                    <span class="welcome-user">Hello, {{ user.username }}</span>
+                    <a href="/accounts/logout/" class="btn-logout">Logout</a>
+                {% else %}
+                    <a href="#" class="btn-login" id="login-modal-open">Login</a>
+                    <a href="#" class="btn-register" id="register-modal-open">Register</a>
+                {% endif %}
+            </div>
             </div>
         </div>
     </header>
@@ -72,8 +79,98 @@
         </div>
     </footer>
 
+    <!-- Modal Overlays -->
+    <div class="modal-overlay" id="login-modal">
+        <div class="modal-container">
+            <div class="modal-close" id="login-modal-close">&times;</div>
+            <div class="login-box">
+                <h1>Login to Munch</h1>
+                <form id="login-form" method="post" action="{% url 'login' %}">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" name="username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" required>
+                    </div>
+                    
+                    <!-- Add a hidden next field to handle redirect after login -->
+                    <input type="hidden" name="next" value="{{ next|default:'/' }}">
+                    
+                    <div class="form-group">
+                        <a href="{% url 'password_reset' %}" class="forgot-password">Forgot Password?</a>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn-login">Login</button>
+                    </div>
+                    <div id="login-error-message" class="error-message">
+                        {% if form.errors %}
+                            Username or password is incorrect.
+                        {% elif form.non_field_errors %}
+                            {% for error in form.non_field_errors %}
+                                {{ error }}
+                            {% endfor %}
+                        {% endif %}
+                        {{ error_message }}
+                    </div>
+                </form>
+                <div class="register-link">
+                    Don't have an account? <a href="#" id="switch-to-register">Register</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="register-modal">
+        <div class="modal-container">
+            <div class="modal-close" id="register-modal-close">&times;</div>
+            <div class="login-box">
+                <h1>Create an Account</h1>
+                <form id="register-form" method="post" action="{% url 'register' %}">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="reg-username">Username</label>
+                        <input type="text" id="reg-username" name="username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-email">Email</label>
+                        <input type="email" id="reg-email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-password">Password</label>
+                        <input type="password" id="reg-password" name="password" required>
+                        <small class="password-hint">Password must be at least 8 characters long</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-confirm_password">Confirm Password</label>
+                        <input type="password" id="reg-confirm_password" name="confirm_password" required>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn-login">Register</button>
+                    </div>
+                    <div id="register-error-message" class="error-message">
+                        {% if form.errors %}
+                            {% for field, errors in form.errors.items %}
+                                {% for error in errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            {% endfor %}
+                        {% endif %}
+                        {{ error_message }}
+                    </div>
+                </form>
+                <div class="register-link">
+                    Already have an account? <a href="#" id="switch-to-login">Login</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Common JavaScript -->
     <script src="{% static 'js/base.js' %}"></script>
+    <script src="{% static 'js/modal.js' %}"></script>
     
     <!-- Additional JavaScript specific to each page -->
     {% block scripts %}{% endblock %}
