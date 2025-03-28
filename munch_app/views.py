@@ -71,3 +71,9 @@ def register(request):
         return redirect('index')
     
     return render(request, 'register.html')
+
+def some_view(request):
+    # Change any occurrences of:
+    # return redirect('home')
+    # to:
+    return redirect('index')

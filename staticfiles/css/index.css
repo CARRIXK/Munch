@@ -1,0 +1,86 @@
+/* Custom styles for the navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between;  
+    align-items: center; 
+    padding: 10px 20px;
+    background-color: #6d5c3d;
+    position: relative; 
+}
+
+.navbar-brand {
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: #20ac0a;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.navbar-brand:hover {
+    color: #200080;
+}
+
+/* Links styling - Always visible on larger screens */
+.nav-links {
+    display: flex; /* Default: show links inline */
+    gap: 15px;
+    margin-left: auto; /* Align links to the right */
+    position: relative;
+}
+
+.nav-links .dropbtn {
+    display: none; /* Hide dropdown button by default */
+    background-color: #36ac49;
+    color: white;
+    padding: 10px 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+.nav-links .dropbtn:hover, .nav-links .dropbtn:focus {
+    background-color: #200080;
+}
+
+.nav-links .dropdown-content {
+    display: flex; /* Default: show links inline */
+    gap: 15px;
+}
+
+.nav-links .dropdown-content a {
+    color: #139000;
+    text-decoration: none;
+    padding: 12px 16px;
+    transition: background-color 0.3s ease;
+}
+
+.nav-links .dropdown-content a:hover {
+    background-color: #ddd;
+}
+
+/* Mobile-specific styles */
+@media (max-width: 578px) {
+    .nav-links {
+        display: flex;
+        flex-direction: column; /* Stack links vertically */
+    }
+
+    .nav-links .dropbtn {
+        display: block; /* Show dropdown button */
+    }
+
+    .nav-links .dropdown-content {
+        display: none; /* Hide links by default */
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background-color: #f1f1f1;
+        box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+    }
+
+    .nav-links.show .dropdown-content {
+        display: flex; /* Show links when dropdown is active */
+    }
+}
