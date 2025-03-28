@@ -4,6 +4,11 @@ from django.contrib.auth import login as auth_login, authenticate
 from django.contrib import messages
 
 # Create your views here.
+
+def base(request):
+    """View function for the base page."""
+    return render(request, 'base.html')
+
 def index(request):
     """View function for the home page."""
     return render(request, 'index.html')
@@ -12,13 +17,9 @@ def menu(request):
     """View function for the menu page."""
     return render(request, 'menu.html')
 
-def about(request):
-    """View function for the about page."""
-    return render(request, 'about.html')
-
-def contact(request):
-    """View function for the contact page."""
-    return render(request, 'contact.html')
+def orders(request):
+    """View function for the orders page."""
+    return render(request, 'orders.html')
 
 def login(request):
     """View function for the login page."""
