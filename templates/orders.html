@@ -1,10 +1,34 @@
 {% extends "base.html" %}
 {% load static %}
-    
-    {% block title %}Orders | Munch{% endblock %}
-    
-    {% block styles %}
-    <link rel="stylesheet" href="{% static 'css/index.css' %}">
-    {% endblock %}
-    
-    {% block content %}
+
+{% block title %}Orders | Munch{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/orders.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="orders-container">
+    <h1>Your Orders</h1>
+    <ul class="orders-list">
+        {% for order in orders %}
+            <li class="order-item">
+                <div class="order-summary">
+                    <span><strong>Restaurant:</strong> {{ order.restaurant_name }}</span>
+                    <span><strong>Status:</strong> {{ order.status }}</span>
+                    <span><strong>Date:</strong> {{ order.date }}</span>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+    {% if not orders %}
+        <p>No orders found.</p>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block scripts %}
+
+<script src="{% static 'js/orders.js' %}"></script>
+
+{% endblock %}
