@@ -11,11 +11,11 @@
 {% block content %}
     <nav class="navbar">
         <div class="container">
-            <a href="{% url 'home' %}" class="navbar-brand">Munch</a>
+            <div>Munch</div>
             <input type="checkbox" id="navbar-toggle" class="navbar-checkbox">
             <label for="navbar-toggle" class="navbar-toggle-label">☰</label>
             <ul class="navbar-menu">
-                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'base' %}">Home</a></li>
                 <li><a href="{% url 'orders' %}">Orders</a></li>
                 <li><a href="{% url 'register' %}">Register</a></li>
                 <li><a href="{% url 'login' %}">Login</a></li>
