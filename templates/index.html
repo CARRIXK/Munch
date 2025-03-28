@@ -9,50 +9,47 @@
 {% endblock %}
 
 {% block content %}
-    <nav class="navbar">
-        <div class="container">
-            <a href="{% url 'home' %}" class="navbar-brand">Munch</a>
-            <input type="checkbox" id="navbar-toggle" class="navbar-checkbox">
-            <label for="navbar-toggle" class="navbar-toggle-label">☰</label>
-            <ul class="navbar-menu">
-                <li><a href="{% url 'home' %}">Home</a></li>
-                <li><a href="{% url 'orders' %}">Orders</a></li>
-                <li><a href="{% url 'register' %}">Register</a></li>
-                <li><a href="{% url 'login' %}">Login</a></li>
-            </ul>
-        </div>
-    </nav>
+<nav class="navbar">
+    <div class="logo">Munch</div>
+    <ul class="nav-links">
+      <li><a href="#">Home</a></li>
+      <li><a href="#">Orders</a></li>
+      <li><a href="#">Register</a></li>
+      <li><a href="#">Login</a></li>
+    </ul>
+  </nav>
 
-    <div class="hero-section">
-        <div class="container">
-            <h1>Delicious Food Delivered to Your Door</h1>
-            <p>Order your favorite meals from local restaurants with Munch</p>
-            <a href="{% url 'menu' %}" class="btn-order-now">Order Now</a>
-        </div>
+  <div class="main-layout">
+    <div class="left-section">
+      <div class="search-container">
+        <input type="text" placeholder="Search..." class="search-input">
+        <button class="search-button">Search</button>
+      </div>
+      <section class="text-section">
+        <h1>A World of Flavors in One Menu</h1>
+        <p><em>Discover the best dishes from around the world.</em></p>
+      </section>
     </div>
 
-    <div class="features-section">
-        <div class="container">
-            <h2>Why Choose Munch?</h2>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">🍔</div>
-                    <h3>Wide Selection</h3>
-                    <p>Choose from hundreds of local restaurants</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">⚡</div>
-                    <h3>Fast Delivery</h3>
-                    <p>Get your food delivered in 30 minutes or less</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">💰</div>
-                    <h3>Great Deals</h3>
-                    <p>Regular promotions and discounts</p>
-                </div>
-            </div>
-        </div>
+    <div class="right-section">
+      <div class="carousel">
+        <button class="carousel-prev">❮</button>
+        <div class="carousel-slide"><img src="images/burger.jpeg" alt="Image 1"></div>
+        <div class="carousel-slide"><img src="images/kebab.jpeg" alt="Image 2"></div>
+        <div class="carousel-slide"><img src="images/salad.jpeg" alt="Image 3"></div>
+        <div class="carousel-slide"><img src="images/share.jpeg" alt="Image 4"></div>
+        <div class="carousel-slide"><img src="images/shrimp.jpeg" alt="Image 5"></div>
+        <div class="carousel-slide"><img src="images/steack.jpeg" alt="Image 6"></div>
+        <div class="carousel-slide"><img src="images/tacos.jpeg" alt="Image 7"></div>
+        <button class="carousel-next">❯</button>
+      </div>
     </div>
+  </div>
+
+  <footer class="footer">
+    <p>&copy; 2023 Munch. All rights reserved.</p>
+  </footer>
+
 {% endblock %}
 
 {% block scripts %}
